@@ -28,7 +28,7 @@ const BurgerIngredient = (props) => {
 			ingredient = <div className="Salad"></div>;
 			break;
 		case "bacon":
-			ingredient = <div className="bacon"></div>;
+			ingredient = <div className="Bacon"></div>;
 			break;
 		default:
 			ingredient = null;
