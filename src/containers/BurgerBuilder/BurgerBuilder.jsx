@@ -17,15 +17,30 @@ class BurgerBuilder extends Component {
 			cheese: 0,
 			meat: 0,
 		},
+		purchasable: null,
 		totalPrice: 4,
 	};
 
+	updatePurchaseState = (ingredients) => {
+		const sum = Object.keys(ingredients)
+			.map((igKey) => {
+				return ingredients[igKey];
+			})
+			.reduce((acc, val) => acc + val);
+
+		this.setState({ purchasable: sum > 0 });
+	};
+
 	addIngredienteHandler = (type) => {
+		// First off, access the key value that you wish to change (using the type)
 		const oldCount = this.state.ingredients[type];
+		// Store in a variable to use to to sum it or deduct it
 		const updatedCount = oldCount + 1;
+		// Once the math operation is performed, spread the state to a variable so it can laber be accessed by using the type that we're getting from the parameter ⬇
 		const updatedIngredients = {
 			...this.state.ingredients,
 		};
+		// We're simply updating the object accessing its key and updating its value with the previous Math calculation
 		updatedIngredients[type] = updatedCount;
 
 		const priceAddition = INGREDIENT_PRICES[type];
@@ -37,13 +52,49 @@ class BurgerBuilder extends Component {
 			totalPrice: newPrice,
 			ingredients: updatedIngredients,
 		});
+		this.updatePurchaseState(updatedIngredients);
+	};
+
+	removeIngredient = (type) => {
+		const oldCount = this.state.ingredients[type];
+		if (oldCount <= 0) {
+			return;
+		}
+		const updatedCount = oldCount - 1;
+		const updatedIngredients = {
+			...this.state.ingredients,
+		};
+		updatedIngredients[type] = updatedCount;
+
+		const priceDeduction = INGREDIENT_PRICES[type];
+		const oldPrice = this.state.totalPrice;
+		const newPrice = oldPrice - priceDeduction;
+
+		// Set the state now
+		this.setState({
+			totalPrice: newPrice,
+			ingredients: updatedIngredients,
+		});
+		this.updatePurchaseState(updatedIngredients);
 	};
 
 	render() {
+		const disabledInfo = {
+			...this.state.ingredients,
+		};
+		for (let key in disabledInfo) {
+			disabledInfo[key] = disabledInfo[key] <= 0;
+		}
 		return (
 			<>
 				<Burger ingredients={this.state.ingredients} />
-				<BuildControls ingredientAdded={this.addIngredienteHandler} />
+				<BuildControls
+					ingredientAdded={this.addIngredienteHandler}
+					ingredientRemoved={this.removeIngredient}
+					disabled={disabledInfo}
+					price={this.state.totalPrice}
+					purchasable={this.state.purchasable}
+				/>
 			</>
 		);
 	}
