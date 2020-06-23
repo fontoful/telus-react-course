@@ -15,6 +15,7 @@ const BuildControls = ({
 	disabled,
 	price,
 	purchasable,
+	modal,
 }) => {
 	return (
 		<div className="BuildControls">
@@ -32,7 +33,11 @@ const BuildControls = ({
 					/>
 				);
 			})}
-			<button disabled={!purchasable} className="OrderButton">
+			<button
+				onClick={() => modal()}
+				disabled={!purchasable}
+				className="OrderButton"
+			>
 				ORDER NOW!
 			</button>
 		</div>
