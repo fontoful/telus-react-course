@@ -6,7 +6,9 @@ import "./Toolbar.css";
 const Toolbar = (props) => {
 	return (
 		<header className="Toolbar">
-			<div>MENU</div>
+			<h3 onClick={props.handler}>
+				<i className="fas fa-bars fa-2x"></i>
+			</h3>
 			<div className="Logo2">
 				<Logo />
 			</div>

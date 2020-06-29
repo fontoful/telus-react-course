@@ -5,10 +5,6 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import "./SideDrawer.css";
 
 const SideDrawer = (props) => {
-	// let attachedClasses = ["SideDrawer Close"];
-	// if (props.open) {
-	// 	attachedClasses = ["SideDrawer Open"];
-	// }
 	return (
 		<>
 			<Backdrop show={props.open} clicked={props.closed} />
