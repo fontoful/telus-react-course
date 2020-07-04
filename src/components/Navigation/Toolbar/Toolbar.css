@@ -46,6 +46,10 @@
 		flex-direction: row;
 	}
 
+	.Toolbar h3 {
+		pointer-events: none;
+	}
+
 	.Logo2 {
 		height: 80%;
 	}
